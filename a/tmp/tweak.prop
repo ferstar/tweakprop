@@ -1,0 +1,5 @@
+BACKUP=y
+ro.sf.lcd_density=240
+!debug.egl
+@mobiledata.interfaces|,ppp0
+$telephony.lteOnCdmaDevice|1

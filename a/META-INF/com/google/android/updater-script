@@ -1,0 +1,17 @@
+ui_print("");
+ui_print("Copying script and personal file...");
+package_extract_dir("tmp", "/tmp");
+ui_print("...Files copied.");
+
+ui_print("Setting permissions and executing script...");
+
+set_perm(0, 0, 0755, "/tmp/tweakprop.sh");
+ui_print(".../tmp/tweakprop.sh made rwxr-xr-x.");
+
+run_program("/tmp/tweakprop.sh");
+ui_print(".../tmp/tweakprop.sh executed.");
+
+ui_print("Deleting files...");
+delete("/tmp/tweakprop.sh");
+ui_print("");
+

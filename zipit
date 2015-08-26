@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case $1 in
+	a)
+		ver=$(grep "ver=" "a/tmp/tweakprop.sh" | cut -d= -f2)
+		zip -6urv tweakprop-${ver}.zip a/;;
+	*)
+		ver=$(grep "ver=" "META-INF/com/google/android/update-binary" | cut -d= -f2)
+		zip -6urv tweakprop-${ver}.zip META-INF/;;
+esac

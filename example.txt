@@ -1,0 +1,33 @@
+# 	 ======================================
+# 	| Dynamic automated build.prop editing |
+# 	|              --by kl3--              |
+# 	 ======================================
+#
+# Personal file located at /sdcard/0/tweak.prop
+#
+# For help, please create an issue on https://notabug.org/kl3/tweakprop
+# or visit the official XDA-Thread http://forum.xda-developers.com/showthread.php?p=2664332
+#
+# If you want to backup your build.prop before editing, uncomment the following line
+# or specify a custom path. Already existing backup files will be overridden.
+#
+
+BACKUP=y|Y|yes|Yes|YES		# creates /sdcard/build.prop.backup since tweak.prop resides there
+#BACKUP=n|N|no|No|NO		# same as commented out, just there for completeness
+#BACKUP=/foo/bar/foo.bar	# chose your own path
+
+#
+# simply add your entries below
+#
+
+# set exactly this entry even if it overrides the already existing value
+ro.sf.lcd_density=240
+
+# remove every entry containing the string "debug.egl"
+!debug.egl
+
+# append the string ",ppp0" to the value string of the variable "mobiledata.interfaces" if it exists
+@mobiledata.interfaces|,ppp0
+
+# Override the value of the variable "telephony.lteOnCdmaDevice" to "1" if and only if the entry already exists
+$telephony.lteOnCdmaDevice|1
