@@ -3,11 +3,24 @@ set -e
 ## /tmp/tweakprop.sh | tweakprop http://forum.xda-developers.com/showthread.php?t=2664332 | https://notabug.org/kl3/tweakprop
 ver=0.5.9a
 
-## credits for ui_print() go to chainfire
-OUTFD=$2
+
+# ui_print - works with both TWRP & CM
+
+# Get the parent process file descriptor
+# it's the second argument 
+OUTFD==$( xargs -0 < /proc/${PPID}/cmdline | awk "{print $2}" ) 2>/dev/null
+
+# Set a NONE value if the process doesnt exist
+OUTFD="${$OUTFD:NONE}"
+
+# If exists then use it - otherwise echo
+# the log file should capture echos
 ui_print() {
-	echo -n -e "ui_print $1\n" > /proc/self/fd/$OUTFD
-	echo -n -e "ui_print\n" > /proc/self/fd/$OUTFD
+    if [ "${OUTFD}" != "NONE" ]; then
+        echo "ui_print ${1} " 1>&/proc/self/fd/$OUTFD;
+    else
+        echo "${1}";
+    fi;
 }
 
 ui_print " "
