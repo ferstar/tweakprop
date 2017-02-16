@@ -4,19 +4,16 @@ set -e
 ver=0.5.9a
 
 
-# ui_print - works with both TWRP & CM
+# ui_print - QuixoticNerd - works with both TWRP & CM
 
 # Get the parent process file descriptor
-# it's the second argument 
-OUTFD==$( xargs -0 < /proc/${PPID}/cmdline | awk "{print $2}" ) 2>/dev/null
-
-# Set a NONE value if the process doesnt exist
-OUTFD="${$OUTFD:NONE}"
+# it's the second argument
+OUTFD=$( xargs -0 < /proc/${PPID}/cmdline | awk '{print $3}' ) 2>/dev/null
 
 # If exists then use it - otherwise echo
 # the log file should capture echos
 ui_print() {
-    if [ "${OUTFD}" != "NONE" ]; then
+    if [ "${OUTFD}" != "" ]; then
         echo "ui_print ${1} " 1>&/proc/self/fd/$OUTFD;
     else
         echo "${1}";
