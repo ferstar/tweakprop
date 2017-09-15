@@ -1,38 +1,48 @@
-Tweak.prop
-==========
+# 免ROOT调整build.prop
+---
 
-About
------
+> 这个工具的作用就是用来生成在`RECOVERY`环境下修改`/system/build.prop`的卡刷包, 所以手机`ROOT`与否都无所谓, 只要手机能刷第三方`RECOVERY`如`TWRP`或`CWM`就行, 理论上支持任意机型
 
-Tweak.prop is a small yet powerful script to make permanent changes to Android's
-`/system/build.prop` more easily or even completely automated.
+在`tmp/tweak.prop`中按要求填入你需要修改或添加的变量, 规定如下:
 
-When upgrading your Android ROM ---which you might do quite frequently when using custom ROMs---,
-`/system/build.prop` gets reset to the ROM image's version wiping all your custom changes.
+1. 添加一个变量, 存在则修改, 不存在则新建
 
-In order to use it your custom settings again, the only way is to reboot, apply your changes and
-reboot yet another time for your modified build.prop to take effect.
+   比如直接填`ro.sf.lcd_density=240`就可以把`ro.sf.lcd_density`值修改为`240`
 
-Tweak.prop gets rid of those annoying behaviour by looking for a file called `tweak.prop` anywhere on
-your phone's storage (even external SD card if present) and applies every change you specified. All this
-takes place in between updating your ROM and rebooting to *userspace*. This is possible by putting the
-tweak.prop script into a flashable zip which can even be flashed automatically by most custom ROMs.
+2. 删除一个变量, 在要删除的条目前加`!`即可
 
-This means, after having set up your personal `tweak.prop` file and eventually putting the `tweakprop.zip`
-in some directory on your phone's storage like OpenDelta/FlashAfterUpdate (OmniROM) for example, everytime
-you update your ROM `/system/build.prop` will look completely unchanged ---besides date, ROM version, etc.---.
-Future changes can easily be made to your `tweak.prop` file using any text editor, terminal emulator, adb or
-whatever suits you best.
+   如`!debug.egl`表示将任意包含`debug.egl`的变量删除
+
+3. 变量追加值
+
+   如`@mobiledata.interfaces|,ppp0`表示在`mobiledata.interfaces`后追加`,ppp0`字段
+
+4. 修改变量值
+
+   如`$telephony.lteOnCdmaDevice|1`表示将`telephony.lteOnCdmaDevice`值修改为`1`
 
 
-Usage
------
+举个实例, 魔趣早期的红米4高配ROM相机录像有问题, 我需要对`tmp/tweak.prop`做如下修改
 
-See `example.txt` for how to specify certain modifications.
+```shell
+# Disable HAL3
+persist.camera.HAL3.enabled=0
+# force HAL1 for below packages(add snap camera)
+@camera.hal1.packagelist|,org.cyanogenmod.snap
+```
 
-If you're using the git version, simply run `zipit` to create a flashable `tweakprop-${ver}.zip`.
+修改完成后, 
 
-Since user requested it, there is also an *a* version, which already contains a `tweak.prop` file and
-therefore won't search your phone for it. Simpy modify `a/tmp/tweak.prop` and run `zipit a` afterwards to
-create a flashable `tweakprop-${ver}a.zip`. Besides that, there is no difference between those zip files
-and their behaviour.
+- 如果是macOS/Linux系统, 在当前目录运行`./zipit`, 将生成的`tweakprop*.zip`压缩包放进手机内置卡, 进入第三方REC开刷
+- 如果是Windows系统, 下载[tweakprop-0.6.0.zip](https://github.com/ferstar/tweakprop/raw/mkn-mr1/tweakprop-0.6.0.zip), 直接用`notepad++`编辑压缩包中的`tmp/tweak.prop`文件, 修改完成后原样塞回`tweakprop-0.6.0.zip`即可, 将压缩包放进手机内置卡, 进入第三方REC开刷
+
+此卡刷包首先会检测内置卡上有无`build.prop.origin`备份文件, 如果有则用此备份文件覆盖到`/system/build.prop`, 此时可以正常刷魔趣OTA更新包; 如果没有, 则备份一份`build.prop`到内置卡, 然后根据`tweak.prop`文件中你希望的改动去修改`/system/build.prop`文件
+
+简单说, 刷一次是修改, 影响OTA, 刷两次是还原, 不影响OTA, 刷三次又是修改, 影响OTA, 刷四次又是还原, 不影响OTA... 以此类推~
+
+**注意不要删除内置卡上的`build.prop.origin`文件**
+
+---
+
+
+[原README文件](https://github.com/ferstar/tweakprop/blob/master/README.md)
