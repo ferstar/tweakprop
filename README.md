@@ -42,6 +42,51 @@ persist.camera.HAL3.enabled=0
 
 **注意不要删除内置卡上的`build.prop.origin`文件**
 
+recovery日志:
+```shell
+Copying script and personal file...
+minzip: Extracted file "/tmp/tweak.prop"
+minzip: Extracted file "/tmp/tweakprop.sh"
+...Files copied.
+Setting permissions and executing script...
+.../tmp/tweakprop.sh made rwxr-xr-x.
+about to run program [/tmp/tweakprop.sh]
+##############################
+#       tweakprop 0.6.0      #
+#         --by kl3--         #
+#   --modified by ferstar--  #
+##############################
+Mount /system partition...
+/system mounted rw
+Mount /data partition...
+/data remounted rw
+Copy /system/build.prop to /sdcard/build.prop.origin...
+Don't modify or delete it
+Set write permissions for /system/build.prop...
+../tmp/tweak.prop found and not empty
+scanning /tmp/tweak.prop...
+..entry "persist.camera.HAL3.enabled=0" added
+..",org.cyanogenmod.snap" appended to value of "camera.hal1.packagelist"
+Tweaks successfully applied!
+..original permissions for /system/build.prop restored
+../system unmounted
+../data unmounted Script finished!
+.../tmp/tweakprop.sh executed.
+Deleting files...
+
+##############################
+#       tweakprop 0.6.0      #
+#         --by kl3--         #
+#   --modified by ferstar--  #
+##############################
+Mount /system partition...
+/system mounted rw
+Mount /data partition...
+/data remounted rw
+build.prop restored, you can use OTA properly.
+.../tmp/tweakprop.sh executed.
+Deleting files...
+```
 ---
 
 
