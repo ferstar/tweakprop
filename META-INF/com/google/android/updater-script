@@ -13,5 +13,6 @@ ui_print(".../tmp/tweakprop.sh executed.");
 
 ui_print("Deleting files...");
 delete("/tmp/tweakprop.sh");
+delete("/tmp/tweak.prop");
 ui_print("");
 
