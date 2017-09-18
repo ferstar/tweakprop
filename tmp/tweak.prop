@@ -19,17 +19,18 @@
 # set exactly this entry even if it overrides the already existing value
 # ro.sf.lcd_density=240
 
-# Disable HAL3
-persist.camera.HAL3.enabled=0
-
 # remove every entry containing the string "debug.egl"
 # !debug.egl
 
 # append the string ",ppp0" to the value string of the variable "mobiledata.interfaces" if it exists
 # @mobiledata.interfaces|,ppp0
 
-# force HAL1 for below packages
-@camera.hal1.packagelist|,org.cyanogenmod.snap
 
 # Override the value of the variable "telephony.lteOnCdmaDevice" to "1" if and only if the entry already exists
 # $telephony.lteOnCdmaDevice|1
+
+# 王者农药高帧率(冒充R11)
+ro.product.manufacturer=OPPO
+ro.product.model=OPPO R11
+ro.product.brand=OPPO
+!ro.build.product
