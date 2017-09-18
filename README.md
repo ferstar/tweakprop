@@ -22,7 +22,7 @@
    如`$telephony.lteOnCdmaDevice|1`表示将`telephony.lteOnCdmaDevice`值修改为`1`
 
 
-举个实例, 魔趣早期的红米4高配ROM相机录像有问题, 我需要对`tmp/tweak.prop`做如下修改
+举个实例, ~~魔趣早期的红米4高配ROM相机录像有问题, 我需要对`tmp/tweak.prop`做如下修改~~(新版已经修复)
 
 ```shell
 # Disable HAL3
